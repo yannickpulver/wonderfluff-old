@@ -1,5 +1,6 @@
 package com.yannickpulver.wonderfluff.ui.detail
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -131,11 +132,20 @@ private fun Pupistics(puppy: Puppy) {
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(text = stringResource(R.string.barkability))
-            LinearProgressIndicator(progress = puppy.barkability, Modifier.fillMaxWidth().padding(top = 4.dp, bottom = 8.dp))
+            LinearProgressIndicator(progress = puppy.barkability,
+                Modifier
+                    .fillMaxWidth()
+                    .padding(top = 4.dp, bottom = 8.dp))
             Text(text = stringResource(R.string.cuddliness))
-            LinearProgressIndicator(progress = puppy.cuddliness, Modifier.fillMaxWidth().padding(top = 4.dp, bottom = 8.dp))
+            LinearProgressIndicator(progress = puppy.cuddliness,
+                Modifier
+                    .fillMaxWidth()
+                    .padding(top = 4.dp, bottom = 8.dp))
             Text(text = stringResource(R.string.guardability))
-            LinearProgressIndicator(progress = puppy.guardability, Modifier.fillMaxWidth().padding(top = 4.dp, bottom = 8.dp))
+            LinearProgressIndicator(progress = puppy.guardability,
+                Modifier
+                    .fillMaxWidth()
+                    .padding(top = 4.dp, bottom = 8.dp))
         }
     }
 }
@@ -196,15 +206,12 @@ private fun PuppyImage(puppy: Puppy) {
         modifier = Modifier
             .fillMaxWidth()
     ) {
-        CoilImage(
-            data = puppy.imageRes,
-            fadeIn = true,
+        Image(painterResource(puppy.imageRes),
             contentDescription = "Image of ${puppy.name}",
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(400.dp)
-        )
+                .height(400.dp))
     }
 }
 

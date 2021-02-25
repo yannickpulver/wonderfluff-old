@@ -1,6 +1,8 @@
 package com.yannickpulver.wonderfluff.ui.list
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
@@ -22,7 +24,6 @@ import androidx.navigation.compose.navigate
 import com.yannickpulver.wonderfluff.R
 import com.yannickpulver.wonderfluff.domain.Puppy
 import com.yannickpulver.wonderfluff.ui.theme.WonderfluffTheme
-import dev.chrisbanes.accompanist.coil.CoilImage
 import dev.chrisbanes.accompanist.insets.statusBarsPadding
 
 
@@ -63,28 +64,23 @@ private fun PuppyList(
             val startPadding = if (even) 0.dp else 8.dp
             val endPadding = if (even) 8.dp else 0.dp
 
+            PuppyItem(puppy, modifier = Modifier
+                .padding(start = startPadding, end = endPadding, bottom = 24.dp)
+                .clickable {
+                    navController.navigate("puppyDetail/${puppy.id}")
+                }
+                .fillMaxWidth())
 
-            Box(
-                modifier = Modifier
-                    .padding(start = startPadding, end = endPadding, bottom = 24.dp)
-                    .clickable {
-                        navController.navigate("puppyDetail/${puppy.id}")
-                    }
-                    .fillMaxWidth()
-            ) {
-                PuppyItem(puppy)
-            }
         }
     }
 }
 
 @Composable
-fun PuppyItem(puppy: Puppy) {
-    Card {
+fun PuppyItem(puppy: Puppy, modifier: Modifier = Modifier) {
+    Card(modifier = modifier) {
         Column(modifier = Modifier.fillMaxWidth()) {
-            CoilImage(
-                data = puppy.imageRes,
-                fadeIn = true,
+            Image(
+                painterResource(puppy.imageRes),
                 contentDescription = "Image of ${puppy.name}",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
