@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.yannickpulver.wonderfluff.R
 import com.yannickpulver.wonderfluff.domain.Puppy
-import dev.chrisbanes.accompanist.coil.CoilImage
 import dev.chrisbanes.accompanist.insets.statusBarsPadding
 
 @Composable
@@ -79,26 +78,22 @@ fun PuppyContent(viewModel: PuppyDetailViewModel, navController: NavHostControll
             )
         }
     ) {
-        Box(
+        Column(
             modifier = Modifier
-                .fillMaxSize()
+                .padding(horizontal = 16.dp)
+                .fillMaxHeight()
                 .verticalScroll(rememberScrollState())
         ) {
-            Column(
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-            ) {
-                PuppyImage(puppy)
-                Spacer(modifier = Modifier.height(16.dp))
-                LookingForAPlace()
-                Spacer(modifier = Modifier.height(16.dp))
-                PawerfulFact(puppy)
-                Spacer(modifier = Modifier.height(16.dp))
-                Pupistics(puppy)
-                Spacer(modifier = Modifier.height(16.dp))
-                AdoptButton(viewModel, puppy)
-                Spacer(modifier = Modifier.height(64.dp))
-            }
+            PuppyImage(puppy)
+            Spacer(modifier = Modifier.height(16.dp))
+            LookingForAPlace()
+            Spacer(modifier = Modifier.height(16.dp))
+            PawerfulFact(puppy)
+            Spacer(modifier = Modifier.height(16.dp))
+            Pupistics(puppy)
+            Spacer(modifier = Modifier.height(16.dp))
+            AdoptButton(viewModel, puppy)
+            Spacer(modifier = Modifier.height(64.dp))
         }
     }
 }
@@ -132,20 +127,26 @@ private fun Pupistics(puppy: Puppy) {
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(text = stringResource(R.string.barkability))
-            LinearProgressIndicator(progress = puppy.barkability,
+            LinearProgressIndicator(
+                progress = puppy.barkability,
                 Modifier
                     .fillMaxWidth()
-                    .padding(top = 4.dp, bottom = 8.dp))
+                    .padding(top = 4.dp, bottom = 8.dp)
+            )
             Text(text = stringResource(R.string.cuddliness))
-            LinearProgressIndicator(progress = puppy.cuddliness,
+            LinearProgressIndicator(
+                progress = puppy.cuddliness,
                 Modifier
                     .fillMaxWidth()
-                    .padding(top = 4.dp, bottom = 8.dp))
+                    .padding(top = 4.dp, bottom = 8.dp)
+            )
             Text(text = stringResource(R.string.guardability))
-            LinearProgressIndicator(progress = puppy.guardability,
+            LinearProgressIndicator(
+                progress = puppy.guardability,
                 Modifier
                     .fillMaxWidth()
-                    .padding(top = 4.dp, bottom = 8.dp))
+                    .padding(top = 4.dp, bottom = 8.dp)
+            )
         }
     }
 }
@@ -156,7 +157,7 @@ fun AdoptionDialog(viewModel: PuppyDetailViewModel, puppy: Puppy) {
         title = { Text(text = "Congratulations.", style = MaterialTheme.typography.h4) },
         text = { Text(text = "You successfully adopted ${puppy.name} in a parallel universe!") },
         confirmButton = {
-            TextButton(onClick = { viewModel.reset() }, ) {
+            TextButton(onClick = { viewModel.reset() }) {
                 Text(text = "Cool!")
             }
         })
@@ -206,12 +207,14 @@ private fun PuppyImage(puppy: Puppy) {
         modifier = Modifier
             .fillMaxWidth()
     ) {
-        Image(painterResource(puppy.imageRes),
+        Image(
+            painterResource(puppy.imageRes),
             contentDescription = "Image of ${puppy.name}",
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(400.dp))
+                .height(400.dp)
+        )
     }
 }
 

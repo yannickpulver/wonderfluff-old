@@ -1,13 +1,9 @@
 package com.yannickpulver.wonderfluff.ui.list
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
+import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -23,11 +19,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.navigate
 import com.yannickpulver.wonderfluff.R
 import com.yannickpulver.wonderfluff.domain.Puppy
+import com.yannickpulver.wonderfluff.ui.core.VerticalGrid
 import com.yannickpulver.wonderfluff.ui.theme.WonderfluffTheme
 import dev.chrisbanes.accompanist.insets.statusBarsPadding
 
 
-@ExperimentalFoundationApi
 @Composable
 fun PuppyList(viewModel: PuppyListViewModel, navController: NavHostController) {
     val puppies: List<Puppy> by viewModel.state.collectAsState()
@@ -52,24 +48,25 @@ fun PuppyList(viewModel: PuppyListViewModel, navController: NavHostController) {
     }
 }
 
-@ExperimentalFoundationApi
 @Composable
 private fun PuppyList(
     puppies: List<Puppy>,
     navController: NavHostController
 ) {
-    LazyVerticalGrid(cells = GridCells.Fixed(2), contentPadding = PaddingValues(16.dp)) {
-        itemsIndexed(puppies) { index, puppy ->
-            val even = index % 2 == 0
-            val startPadding = if (even) 0.dp else 8.dp
-            val endPadding = if (even) 8.dp else 0.dp
+        VerticalGrid(Modifier.padding(horizontal = 16.dp).verticalScroll(rememberScrollState())) {
+            puppies.forEachIndexed { index, puppy ->
+                val even = index % 2 == 0
+                val startPadding = if (even) 0.dp else 8.dp
+                val endPadding = if (even) 8.dp else 0.dp
 
-            PuppyItem(puppy, modifier = Modifier
-                .padding(start = startPadding, end = endPadding, bottom = 24.dp)
-                .clickable {
-                    navController.navigate("puppyDetail/${puppy.id}")
-                }
-                .fillMaxWidth())
+                PuppyItem(puppy, modifier = Modifier
+                    .padding(start = startPadding, end = endPadding, bottom = 24.dp)
+                    .clickable {
+                        navController.navigate("puppyDetail/${puppy.id}")
+                    }
+                    .fillMaxWidth()
+                    .animateContentSize())
+
 
         }
     }
